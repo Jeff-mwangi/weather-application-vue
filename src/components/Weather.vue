@@ -2,7 +2,12 @@
   <div class="weather">
     <div class="weather__header">
       <h1 class="weather__title">TODAY'S WEATHER</h1>
-      <input type="search" name="search" id="" placeholder="Search...">
+      <input type="search"
+       @keypress="getWeather()" 
+       name="search"
+       v-model="city"
+        placeholder="Search...">
+        {{city}}
       <div class="weather_header_location">
       <div class="weather_location">
         <span>{{ location }}</span>
@@ -47,20 +52,7 @@ export default {
       description: 'Sunny',
       location: 'New York',
       date: '12/06/2022',
-      cities: [
-        {
-          name: 'London',
-          id: '2643743'
-        },
-        {
-          name: 'New York',
-          id: '5128581'
-        },
-        {
-          name: 'Tokyo',
-          id: '1850147'
-        }
-      ]
+      city:''
     }
   },
   methods: {
@@ -165,6 +157,7 @@ export default {
   text-shadow: 3px 6px rgba(0, 0,0,0.25);
 }
 .weather__footer{
+  padding-top:120px;
   bottom: 0;
 }
 .weather__footer p a{
