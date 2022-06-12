@@ -1,7 +1,7 @@
 <template>
   <div class="weather">
     <div class="weather__header">
-      <h1 class="weather__title">TODAY'S WEATHER</h1>
+      <h1 class="weather__title">WEATHER</h1>
       <input type="search"
        @keypress="getWeather" 
        name="search"
@@ -22,19 +22,13 @@
           <span>{{ currentTemp }}</span>
           <span>°C</span>
         </div>
-        <!-- <div class="weather__body__temp__minmax">
-          <span>{{ minTemp }}</span>
-          <span>°C</span>
-          <span>{{ maxTemp }}</span>
-          <span>°C</span>
-        </div> -->
       </div>
       <div class="weather__body__description">
         <span>{{ description }}</span>
       </div>
     </div>
     <div class="weather__footer">
-      <p>Designed by <a href="">Geoffrey Mwangi</a></p>
+      <p>Designed by <a href="https://jeff-mwangi-portofolio.netlify.app" target="_">Geoffrey Mwangi</a></p>
     </div>
   </div>
 
@@ -57,6 +51,19 @@ export default {
     }
   },
   methods: {
+    displayWeather() {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=Nairobi&appid=${this.appid}`
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          this.currentTemp = Math.round(data.main.temp - 273.15)
+          this.minTemp = Math.round(data.main.temp_min - 273.15)
+          this.maxTemp = Math.round(data.main.temp_max - 273.15)
+          this.description = data.weather[0].description
+          this.location = data.name
+          this.date = new Date(data.dt * 1000).toLocaleDateString()
+        })
+    },
    getWeather(e) {
     if(e.key == "Enter") {
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=${this.appid}`
@@ -73,7 +80,9 @@ export default {
     }
     }
   },
-
+  mounted() {
+    this.displayWeather()
+  },
 }
 
 </script>
@@ -122,7 +131,7 @@ export default {
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
 }
 .weather_header_location{
-  padding-top:45px;
+  padding-top:30px;
 }
 .weather_location{
   font-size: 2.2rem;
@@ -134,7 +143,7 @@ export default {
   font-weight: 300;
 }
 .weather__body {
-  margin-top: 8rem;
+  margin-top: 3rem;
   font-size: 2rem;
 }
 .weather__body__temp__current{
@@ -155,12 +164,16 @@ export default {
   text-shadow: 3px 6px rgba(0, 0,0,0.25);
 }
 .weather__footer{
-  padding-top:100px;
-  bottom: 0;
+  font-size: 1rem;
+  margin-top: 2rem;
+  padding: 0 1rem;
 }
 .weather__footer p a{
   color: #fff;
   text-decoration-line: none;
+}
+.weather__footer p a:hover{
+  color:peru;
 }
 
 
