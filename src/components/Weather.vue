@@ -1,5 +1,5 @@
 <template>
-  <div class="weather">
+  <div class="weather" :class=" currentTemp >18 ? 'warm':''">
     <div class="weather__header">
       <h1 class="weather__title">WEATHER</h1>
       <input type="search"
@@ -79,10 +79,11 @@ export default {
           this.location = data.name
           this.country = data.sys.country
           this.date = new Date(data.dt * 1000).toLocaleDateString()
-        })
-        if (data.cod == "404") {
+          if (data.cod == "404") {
           alert("City not found")
         }
+        })
+        
     }
     }
 
@@ -103,10 +104,13 @@ export default {
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.75)), url('../assets/sun-rise.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.75)), url('../assets/clouds.gif');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+.warm{
+background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.75)), url('../assets/sun-rise.jpg');
 }
 .weather__header h1 {
   font-size: 3rem;
