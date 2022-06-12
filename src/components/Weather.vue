@@ -1,0 +1,176 @@
+<template>
+  <div class="weather">
+    <div class="weather__header">
+      <h1 class="weather__title">TODAY'S WEATHER</h1>
+      <input type="search" name="search" id="" placeholder="Search...">
+      <div class="weather_header_location">
+      <div class="weather_location">
+        <span>{{ location }}</span>
+      </div>
+      <div class="weather_date">
+        <span>{{ date }}</span>
+      </div>
+      </div>
+    </div>
+    <div class="weather__body">
+      <div class="weather__body__temp">
+        <div class="weather__body__temp__current">
+          <span>{{ currentTemp }}</span>
+          <span>°C</span>
+        </div>
+        <!-- <div class="weather__body__temp__minmax">
+          <span>{{ minTemp }}</span>
+          <span>°C</span>
+          <span>{{ maxTemp }}</span>
+          <span>°C</span>
+        </div> -->
+      </div>
+      <div class="weather__body__description">
+        <span>{{ description }}</span>
+      </div>
+    </div>
+    <div class="weather__footer">
+      <p>Designed by <a href="">Geoffrey Mwangi</a></p>
+    </div>
+  </div>
+
+</template>
+
+<script>
+export default {
+  name: 'Weather',
+  data() {
+    return {
+      currentTemp: 19,
+      minTemp: 0,
+      maxTemp: 40,
+      description: 'Sunny',
+      location: 'New York',
+      date: '12/06/2022',
+      cities: [
+        {
+          name: 'London',
+          id: '2643743'
+        },
+        {
+          name: 'New York',
+          id: '5128581'
+        },
+        {
+          name: 'Tokyo',
+          id: '1850147'
+        }
+      ]
+    }
+  },
+  methods: {
+    toggleModal() {
+      this.modal = !this.modal
+    },
+    getWeather(city) {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.VUE_APP_API_KEY}`
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          this.currentTemp = Math.round(data.main.temp - 273.15)
+          this.minTemp = Math.round(data.main.temp_min - 273.15)
+          this.maxTemp = Math.round(data.main.temp_max - 273.15)
+          this.description = data.weather[0].description
+          this.location = data.name
+          this.date = new Date(data.dt * 1000).toLocaleDateString()
+        })
+    }
+  },
+  mounted() {
+    this.getWeather(this.cities[0].name)
+  }
+}
+
+</script>
+
+<style scoped>
+.weather {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.75)), url('../assets/sun-rise.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.weather__header h1 {
+  font-size: 3rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+}
+.weather__header input {
+  margin-top:2rem;
+  width: 100%;
+  height: 3rem;
+  border: none;
+  border-radius: 15px 0 15px 0;
+  background-color:rgba(255, 255, 255, 0.5);
+  padding: 0 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  outline: none;
+  box-shadow: 0px 0px 8px  rgba(0, 0, 0, 0.25);
+  transition: 0.4s;
+}
+.weather__header input:focus {
+  border-radius: 0 15px 0 15px;
+  background-color:rgba(255, 255, 255, 0.75);
+  color: #2c3e50;
+}
+.weather__header input:hover {
+  border-radius: 0 15px 0 15px;
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
+}
+.weather_header_location{
+  padding-top:45px;
+}
+.weather_location{
+  font-size: 2.2rem;
+  font-weight: 500;
+}
+.weather_date{
+  font-style: italic;
+  font-size:1.3rem;
+  font-weight: 300;
+}
+.weather__body {
+  margin-top: 8rem;
+  font-size: 2rem;
+}
+.weather__body__temp__current{
+  font-size: 6rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  padding:10px 25px;
+  text-shadow: 3px 6px rgba(0, 0,0,0.25);
+  background-color:rgba(255, 255, 255, 0.25);
+  border-radius:10px;
+
+}
+.weather__body__description{
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding:10px 25px;
+  text-shadow: 3px 6px rgba(0, 0,0,0.25);
+}
+.weather__footer{
+  bottom: 0;
+}
+.weather__footer p a{
+  color: #fff;
+  text-decoration-line: none;
+}
+
+
+</style>
