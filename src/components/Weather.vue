@@ -1,5 +1,5 @@
 <template>
-  <div class="weather" :class=" currentTemp >18 ? 'warm':''">
+  <div class="weather" :class=" currentTemp >18 && currentTemp <28 ? 'warm': currentTemp >29 ? 'hot' : '' ">
     <div class="weather__header">
       <h1 class="weather__title">WEATHER</h1>
       <input type="search"
@@ -41,8 +41,6 @@ export default {
     return {
 
       currentTemp: '',
-      minTemp: '',
-      maxTemp: '',
       description: '',
       location: '',
       country: '',
@@ -58,8 +56,6 @@ export default {
         .then(response => response.json())
         .then(data => {
           this.currentTemp = Math.round(data.main.temp - 273.15)
-          this.minTemp = Math.round(data.main.temp_min - 273.15)
-          this.maxTemp = Math.round(data.main.temp_max - 273.15)
           this.description = data.weather[0].main
           this.location = data.name
           this.country = data.sys.country
@@ -73,8 +69,6 @@ export default {
         .then(response => response.json())
         .then(data => {
           this.currentTemp = Math.round(data.main.temp - 273.15)
-          this.minTemp = Math.round(data.main.temp_min - 273.15)
-          this.maxTemp = Math.round(data.main.temp_max - 273.15)
           this.description = data.weather[0].main
           this.location = data.name
           this.country = data.sys.country
@@ -83,7 +77,6 @@ export default {
           alert("City not found")
         }
         })
-        
     }
     }
 
@@ -111,6 +104,9 @@ export default {
 }
 .warm{
 background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.75)), url('../assets/sun-rise.jpg');
+}
+.hot{
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.75)), url('../assets/hot-weather.png');
 }
 .weather__header h1 {
   font-size: 3rem;
@@ -187,6 +183,4 @@ background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.75)), url(
 .weather__footer p a:hover{
   color:peru;
 }
-
-
 </style>
