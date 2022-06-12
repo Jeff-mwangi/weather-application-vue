@@ -9,7 +9,7 @@
         placeholder="Search...">
       <div class="weather_header_location">
       <div class="weather_location">
-        <span>{{ location }}</span>
+        <span>{{ location }}, {{country}}</span>
       </div>
       <div class="weather_date">
         <span>{{ date }}</span>
@@ -45,6 +45,7 @@ export default {
       maxTemp: '',
       description: '',
       location: '',
+      country: '',
       date: '',
       appid: '6a1a24893108fb7dee985b31cd47d9f6',
       city:''
@@ -59,8 +60,9 @@ export default {
           this.currentTemp = Math.round(data.main.temp - 273.15)
           this.minTemp = Math.round(data.main.temp_min - 273.15)
           this.maxTemp = Math.round(data.main.temp_max - 273.15)
-          this.description = data.weather[0].description
+          this.description = data.weather[0].main
           this.location = data.name
+          this.country = data.sys.country
           this.date = new Date(data.dt * 1000).toLocaleDateString()
         })
     },
@@ -73,13 +75,19 @@ export default {
           this.currentTemp = Math.round(data.main.temp - 273.15)
           this.minTemp = Math.round(data.main.temp_min - 273.15)
           this.maxTemp = Math.round(data.main.temp_max - 273.15)
-          this.description = data.weather[0].description
+          this.description = data.weather[0].main
           this.location = data.name
+          this.country = data.sys.country
           this.date = new Date(data.dt * 1000).toLocaleDateString()
         })
+        if (data.cod == "404") {
+          alert("City not found")
+        }
     }
     }
+
   },
+  
   mounted() {
     this.displayWeather()
   },
