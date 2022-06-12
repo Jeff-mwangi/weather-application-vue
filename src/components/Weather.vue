@@ -3,11 +3,10 @@
     <div class="weather__header">
       <h1 class="weather__title">TODAY'S WEATHER</h1>
       <input type="search"
-       @keypress="getWeather()" 
+       @keypress="getWeather" 
        name="search"
        v-model="city"
         placeholder="Search...">
-        {{city}}
       <div class="weather_header_location">
       <div class="weather_location">
         <span>{{ location }}</span>
@@ -46,21 +45,21 @@ export default {
   name: 'Weather',
   data() {
     return {
-      currentTemp: 19,
-      minTemp: 0,
-      maxTemp: 40,
-      description: 'Sunny',
-      location: 'New York',
-      date: '12/06/2022',
+
+      currentTemp: '',
+      minTemp: '',
+      maxTemp: '',
+      description: '',
+      location: '',
+      date: '',
+      appid: '6a1a24893108fb7dee985b31cd47d9f6',
       city:''
     }
   },
   methods: {
-    toggleModal() {
-      this.modal = !this.modal
-    },
-    getWeather(city) {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.VUE_APP_API_KEY}`
+   getWeather(e) {
+    if(e.key == "Enter") {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=${this.appid}`
       fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -72,10 +71,9 @@ export default {
           this.date = new Date(data.dt * 1000).toLocaleDateString()
         })
     }
+    }
   },
-  mounted() {
-    this.getWeather(this.cities[0].name)
-  }
+
 }
 
 </script>
@@ -157,7 +155,7 @@ export default {
   text-shadow: 3px 6px rgba(0, 0,0,0.25);
 }
 .weather__footer{
-  padding-top:120px;
+  padding-top:100px;
   bottom: 0;
 }
 .weather__footer p a{
