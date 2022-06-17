@@ -1,7 +1,25 @@
-# Vue 3 + Vite
+This is a web based weather application that shows the real-time weather of a certain country or city. It is built using Vue3 technology 🥳
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+# Installation 🛠
+Clone the repo using:
 
-## Recommended IDE Setup
+```bash
+git clone https://github.com/Jeff-mwangi/weather-application-vue.git
+```
+First, navigate to the project folder using:
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+```bash
+cd weather-application-vue
+```
+
+Secondly, run the following command to install the required dependancies:
+
+```bash
+yarn
+```
+
+Finally run the application on your machine, use the following command:
+
+```bash
+yarn dev
+```
